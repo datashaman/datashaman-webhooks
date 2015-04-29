@@ -24,6 +24,9 @@ Then do something like the following (assuming the use of bunyan for logging):
         switch (event) {
         case 'ping':
             res.send('Ping');
+        break;
+        default:
+            res.send('Unhandled event: ' + event);
         }
     }));
 
