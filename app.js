@@ -4,7 +4,7 @@ var log = bunyan.createLogger({ name: 'app' });
 
 var app = express();
 
-var pkg = require('./pkg');
+var pkg = require('./index.js');
 pkg.boot(app, 'somesecret');
 
 app.post('/', pkg.router(function(req, res, event) {
