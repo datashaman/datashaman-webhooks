@@ -1,19 +1,27 @@
-var express = require('express');
 var bodyParser = require('body-parser');
+var Crypto = require('ezcrypto').Crypto;
 
-var app = express();
-var router = express.Router();
+module.exports = {
+	boot: function(app, secret) {
+        app.use(bodyParser.raw({ type: 'application/json' }));
 
-var pkg = require('./pkg');
+	    app.use(function (req, res, next) {
+            var body = req.body.toString('utf8');
+            var signature = 'sha1' + Crypto.HMAC(Crypto.SHA1, body, secret, { asBytes: false });
 
-app.use(bodyParser.raw({ type: 'application/json' }));
-app.use(pkg.middleware);
-
-app.post('/', pkg.router(function(req, res, event) {
-	switch (event) {
-	case 'ping':
-		res.send('Ping');
+            if (signature === req.headers['x-hub-signature']) {
+                req.body = JSON.parse(body);
+                next();
+            } else {
+                res.sendStatus(404);
+                res.end();
+            }
+        });
+	},
+	router: function(func) {
+		return function (req, res) {
+			var event = req.headers['x-github-event'];
+			return func(req, res, event);
+		};
 	}
-}));
-
-app.listen(80);
+};
