@@ -13,6 +13,9 @@ app.post('/', webhooks.router(function(req, res, event) {
     switch (event) {
     case 'ping':
         res.send('Ping');
+    break;
+    default:
+        res.send('Unhandled event: ' + event);
     }
 }));
 
