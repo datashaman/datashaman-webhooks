@@ -10,10 +10,10 @@ webhooks.boot(app, 'somesecret');
 app.post('/', webhooks.router(function(req, res, event) {
     log.info(req.body, event);
 
-	switch (event) {
-	case 'ping':
-		res.send('Ping');
-	}
+    switch (event) {
+    case 'ping':
+        res.send('Ping');
+    }
 }));
 
 app.listen(8080);
