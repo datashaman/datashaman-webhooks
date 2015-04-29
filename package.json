@@ -1,13 +1,20 @@
 {
   "name": "datashaman-webhooks",
   "version": "0.1.0",
-  "description": "",
+  "homepage": "https://github.com/datashaman/datashaman-webhooks",
+  "description": "GitHub webhooks done the easy way",
+  "repository": "datashaman/datashaman-webhooks",
+  "bugs": "https://github.com/datashaman/datashaman-webhooks/issues",
+  "keywords": [
+      "webhook",
+      "github"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "~1.12.3",
     "ezcrypto": "0.0.3"
