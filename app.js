@@ -10,10 +10,10 @@ pkg.boot(app, 'somesecret');
 app.post('/', pkg.router(function(req, res, event) {
     log.info(req.body);
 
-	switch (event) {
-	case 'ping':
-		res.send('Ping');
-	}
+    switch (event) {
+    case 'ping':
+        res.send('Ping');
+    }
 }));
 
-app.listen(80);
+app.listen(8080);
