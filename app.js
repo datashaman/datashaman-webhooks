@@ -8,7 +8,7 @@ var pkg = require('./index.js');
 pkg.boot(app, 'somesecret');
 
 app.post('/', pkg.router(function(req, res, event) {
-    log.info(req.body);
+    log.info(req.body, event);
 
     switch (event) {
     case 'ping':
