@@ -1,6 +1,6 @@
 {
   "name": "datashaman-webhooks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/datashaman/datashaman-webhooks",
   "description": "GitHub webhooks done the easy way",
   "repository": "datashaman/datashaman-webhooks",
