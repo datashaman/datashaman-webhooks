@@ -16,7 +16,7 @@ Then do something like the following (assuming the use of bunyan for logging):
     var app = express();
 
     var webhooks = require('datashaman-webhooks');
-    webhooks.boot(app, 'somesecret');
+    webhooks.boot(app, process.env.SECRET_TOKEN);
 
     app.post('/', webhooks.router(function(req, res, event) {
         log.info(req.body, event);
@@ -24,15 +24,20 @@ Then do something like the following (assuming the use of bunyan for logging):
         switch (event) {
         case 'ping':
             res.send('Ping');
-        break;
+            break;
         default:
             res.send('Unhandled event: ' + event);
         }
     }));
 
-    app.listen(8080);
+    app.listen(process.env.PORT || 8080);
 
-'somesecret' should be replaced with the secret from the webhook page on GitHub.
+`SECRET_TOKEN` should store the secret from the webhook page on GitHub.
+
+You could also simply copy this app into your base folder, and install the two requirements:
+
+    cp node_modules/datashaman-webhooks/app.js .
+    npm install --save express bunyan
 
 You can attach the webhooks router to any route you like, as long it's a post method.
 

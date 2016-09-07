@@ -5,7 +5,7 @@ var log = bunyan.createLogger({ name: 'app' });
 var app = express();
 
 var webhooks = require('datashaman-webhooks');
-webhooks.boot(app, 'somesecret');
+webhooks.boot(app, process.env.SECRET_TOKEN);
 
 app.post('/', webhooks.router(function(req, res, event) {
     log.info(req.body, event);
@@ -13,10 +13,10 @@ app.post('/', webhooks.router(function(req, res, event) {
     switch (event) {
     case 'ping':
         res.send('Ping');
-    break;
+		break;
     default:
         res.send('Unhandled event: ' + event);
     }
 }));
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
