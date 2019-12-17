@@ -18,13 +18,13 @@ Then do something like the following (or fork this repository and use _app.js_):
     webhooks.boot(app, process.env.GITHUB_SECRET)
 
     app.post('/', webhooks.router((req, res, event) => {
-    switch (event) {
-    case 'ping':
+      switch (event) {
+      case 'ping':
         res.send('Ping')
         break
-    default:
+      default:
         res.send('Unhandled event: ' + event)
-    }
+      }
     }))
 
     app.listen(process.env.PORT || 8080)
