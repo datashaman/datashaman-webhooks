@@ -7,37 +7,29 @@ Install the package into your Express application:
 
     npm install --save datashaman-webhooks
 
-Then do something like the following (assuming the use of bunyan for logging):
+Then do something like the following (or fork this repository and use _app.js_):
 
-    var express = require('express');
-    var bunyan = require('bunyan');
-    var log = bunyan.createLogger({ name: 'app' });
+    require('dotenv').config()
 
-    var app = express();
+    const express = require('express')
+    const app = express()
 
-    var webhooks = require('datashaman-webhooks');
-    webhooks.boot(app, process.env.SECRET_TOKEN);
+    const webhooks = require('datashaman-webhooks')
+    webhooks.boot(app, process.env.GITHUB_SECRET)
 
-    app.post('/', webhooks.router(function(req, res, event) {
-        log.info(req.body, event);
+    app.post('/', webhooks.router((req, res, event) => {
+    switch (event) {
+    case 'ping':
+        res.send('Ping')
+        break
+    default:
+        res.send('Unhandled event: ' + event)
+    }
+    }))
 
-        switch (event) {
-        case 'ping':
-            res.send('Ping');
-            break;
-        default:
-            res.send('Unhandled event: ' + event);
-        }
-    }));
+    app.listen(process.env.PORT || 8080)
 
-    app.listen(process.env.PORT || 8080);
-
-`SECRET_TOKEN` should store the secret from the webhook page on GitHub.
-
-You could also simply copy this app into your base folder, and install the two requirements:
-
-    cp node_modules/datashaman-webhooks/app.js .
-    npm install --save express bunyan
+`GITHUB_SECRET` should store the secret from the webhook page on GitHub.
 
 You can attach the webhooks router to any route you like, as long it's a post method.
 

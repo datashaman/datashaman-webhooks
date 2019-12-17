@@ -1,22 +1,19 @@
-var express = require('express');
-var bunyan = require('bunyan');
-var log = bunyan.createLogger({ name: 'app' });
+require('dotenv').config()
 
-var app = express();
+const express = require('express')
+const app = express()
 
-var webhooks = require('datashaman-webhooks');
-webhooks.boot(app, process.env.SECRET_TOKEN);
+const webhooks = require('datashaman-webhooks')
+webhooks.boot(app, process.env.GITHUB_SECRET)
 
-app.post('/', webhooks.router(function(req, res, event) {
-    log.info(req.body, event);
+app.post('/', webhooks.router((req, res, event) => {
+  switch (event) {
+  case 'ping':
+    res.send('Ping')
+    break
+  default:
+    res.send('Unhandled event: ' + event)
+  }
+}))
 
-    switch (event) {
-    case 'ping':
-        res.send('Ping');
-		break;
-    default:
-        res.send('Unhandled event: ' + event);
-    }
-}));
-
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8080)
